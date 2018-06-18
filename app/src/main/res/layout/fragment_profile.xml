@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!--<TextView-->
+    <!--android:id="@+id/section_label"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="@dimen/activity_vertical_margin"-->
+    <!--android:layout_marginEnd="@dimen/activity_horizontal_margin"-->
+    <!--android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+    <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
+    <!--android:text="Profile"-->
+    <!--app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/constraintLayout"-->
+    <!--tools:layout_constraintLeft_creator="1"-->
+    <!--tools:layout_constraintTop_creator="1" />-->
+
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="122dp"
+        android:layout_height="123dp"
+        android:background="@drawable/ic_cancel_black_24px"
+        app:srcCompat="@drawable/btn_star_big_off"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:text="المركز الدولي للاجهزة الطبية"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="161dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="دكتور خالد ابو طاقية"
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="186dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/darker_gray"
+        app:srcCompat="@drawable/ic_menu_edit"
+        tools:layout_editor_absoluteX="326dp"
+        tools:layout_editor_absoluteY="453dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medical Instruments "
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="232dp" />
+
+</android.support.constraint.ConstraintLayout>
