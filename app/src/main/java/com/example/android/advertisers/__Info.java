@@ -12,6 +12,10 @@ public class __Info {
     public static String serviceType;
     public static String phone;
     public static String adrs;
+    public static String slogan;
+    public static String workTime;
+    public static String iconURL;
+
     public static String licence;
     public static double lat;
     public static double lng;

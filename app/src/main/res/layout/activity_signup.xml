@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.example.a.myapplication.SignUP2">
+    tools:context="com.example.android.advertisers.SignupActivity">
 
     <!--<ImageView-->
         <!--android:id="@+id/imageView2"-->

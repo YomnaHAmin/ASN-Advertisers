@@ -42,7 +42,7 @@ public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewA
         holder.adTitle.setText(ad.getTitle());
         holder.adDesc.setText(ad.getDescription());
 
-        Picasso.get().load(ad.getImgURL()).into(holder.adImg);
+        Picasso.with(context).load(ad.getImgURL()).into(holder.adImg);
     }
 
     @Override

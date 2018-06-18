@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAFAFA"
-    tools:context="com.example.a.myapplication.SignIn">
+    tools:context="com.example.android.advertisers.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView2"

@@ -1,16 +1,26 @@
 package com.example.android.advertisers;
 
+import java.util.Date;
+
 public class AdvertismentClass {
 
     private String title;
     private String description;
     private String imgURL;
+    private Date expirationDate = null;
+    private int ID;
 
 
     AdvertismentClass(String title, String description, String imgPath){
         this.title = title;
         this.description = description;
         this.imgURL = imgPath;
+    }
+    AdvertismentClass(String title, String description, String imgPath, Date expirationDate){
+        this.title = title;
+        this.description = description;
+        this.imgURL = imgPath;
+        this.expirationDate = expirationDate;
     }
 
     public void setTitle(String title){
@@ -22,7 +32,7 @@ public class AdvertismentClass {
     public void setImgURL(String imgURL){
         this.imgURL = imgURL;
     }
-
+    public void setExpirationDate(Date expirationDate){ this.expirationDate = expirationDate; }
 
     public String getDescription() {
         return description;
@@ -33,4 +43,5 @@ public class AdvertismentClass {
     public String getImgURL() {
         return imgURL;
     }
+    public Date getExpirationDate() { return expirationDate; }
 }
