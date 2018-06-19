@@ -11,12 +11,14 @@ public class AdvertismentClass {
     private int ID;
 
 
-    AdvertismentClass(String title, String description, String imgPath){
+    AdvertismentClass(int ID, String title, String description, String imgPath){
+        this.ID = ID;
         this.title = title;
         this.description = description;
         this.imgURL = imgPath;
     }
-    AdvertismentClass(String title, String description, String imgPath, Date expirationDate){
+    AdvertismentClass(int ID, String title, String description, String imgPath, Date expirationDate){
+        this.ID = ID;
         this.title = title;
         this.description = description;
         this.imgURL = imgPath;

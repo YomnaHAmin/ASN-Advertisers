@@ -77,6 +77,7 @@ public class AdvFragment extends Fragment{
                             for(int i = 0; i < obj.length(); i++){
                                 JSONObject o = obj.getJSONObject(String.valueOf(i));
                                 AdvertismentClass ad = new AdvertismentClass(
+                                        o.getInt("ID"),
                                         o.getString("title"),
                                         o.getString("desc"),
                                         o.getString("imgURL")
