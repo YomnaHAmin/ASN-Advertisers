@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdvFragment extends Fragment{
+public class AdvFragment extends Fragment implements FragmentLifeCycle{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -49,9 +49,13 @@ public class AdvFragment extends Fragment{
         // Define the array of advertisments and fill it
         ads = new ArrayList<>();
         loadRecyclerViewData();
-
         return rootView;
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//    }
 
     private void loadRecyclerViewData(){
         final AdvFragment self = this;
@@ -80,7 +84,8 @@ public class AdvFragment extends Fragment{
                                         o.getInt("ID"),
                                         o.getString("title"),
                                         o.getString("desc"),
-                                        o.getString("imgURL")
+                                        o.getString("imgURL"),
+                                        o.getString("expirationDate")
                                 );
                                 ads.add(ad);
                             }
@@ -115,4 +120,14 @@ public class AdvFragment extends Fragment{
         requestQueue.add(stringRequest);
     }
 
+
+    @Override
+    public void onPauseFragment() {
+
+    }
+
+    @Override
+    public void onResumeFragment() {
+        loadRecyclerViewData();
+    }
 }

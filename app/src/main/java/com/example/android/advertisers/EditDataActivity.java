@@ -1,11 +1,16 @@
 package com.example.android.advertisers;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -32,6 +37,7 @@ import java.util.Map;
 
 public class EditDataActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMG = 1;
+    private static final int RESULT_PROCESS_IMG = 100;
 
     EditText name, slogan, serviceType, availibility, adrs, phone, email, licence;
     String newIcon, newName, newSlogan, newServiceType, newAvailibility, newAdrs, newPhone, newEmail, newLicence;
@@ -64,11 +70,31 @@ public class EditDataActivity extends AppCompatActivity {
     }
 
     public void chsImgBtnOnClick(View v){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                }, RESULT_PROCESS_IMG);
+            }
+            return;
+        }else{
+            openGallery();
+        }
+    }
+    private void openGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
     }
 
-    @Override
+        @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -90,7 +116,29 @@ public class EditDataActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        switch (requestCode){
+//            case RESULT_ACCESS_LOCATION:
+//                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                    getLocation();
+//                }
+//                else{
+//                    Toast.makeText(this, "Location Permissions not granted",Toast.LENGTH_LONG);
+//                }
+//                return;
+            case RESULT_PROCESS_IMG:
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openGallery();
+                }
+                else{
+                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG);
+                }
+                return;
+        }
+    }
     public void svChngsBtnOnClick(View view){
 
         newName = name.getText().toString().trim();
@@ -103,7 +151,7 @@ public class EditDataActivity extends AppCompatActivity {
         newLicence = licence.getText().toString().trim();
 
         if(newName == null || newServiceType == null || newAdrs == null || newEmail == null || newLicence == null ){
-            Toast.makeText(this, "Please Fill Required Freilds", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG);
         }
         else{
             final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -124,14 +172,27 @@ public class EditDataActivity extends AppCompatActivity {
                                 Parse the JSON object here and update _info
                              */
 
-                                __Info.name = obj.getString("name");
-                                __Info.slogan = obj.getString("slogan");
-                                __Info.serviceType = obj.getString("serviceType");
-                                __Info.adrs = obj.getString("adrs");
-                                __Info.workTime = obj.getString("workingTime");
-                                __Info.phone = obj.getString("phone");
-                                __Info.email = obj.getString("email");
-                                __Info.licence = obj.getString("licence");
+                                SharedPrefManager.getInstance(getApplicationContext()).editUserInfo(
+                                        obj.getString("name"),
+                                        obj.getString("slogan"),
+                                        obj.getString("serviceType"),
+                                        obj.getString("adrs"),
+                                        obj.getString("workingTime"),
+                                        obj.getString("phone"),
+                                        obj.getString("email"),
+                                        obj.getString("licence"),
+                                        obj.getString("iconURL")
+                                );
+
+//                                __Info.name = obj.getString("name");
+//                                __Info.slogan = obj.getString("slogan");
+//                                __Info.serviceType = obj.getString("serviceType");
+//                                __Info.adrs = obj.getString("adrs");
+//                                __Info.workTime = obj.getString("workingTime");
+//                                __Info.phone = obj.getString("phone");
+//                                __Info.email = obj.getString("email");
+//                                __Info.licence = obj.getString("licence");
+//                                __Info.iconURL = obj.getString("iconURL");
 
 
                                 // CHECK HOW TO START A TABBED ACTIVITY ON CERTAIN TAB !!! 

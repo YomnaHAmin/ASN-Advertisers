@@ -83,7 +83,8 @@
         android:textSize="20dp"
         android:layout_below="@+id/editeTextEmailid"
         android:layout_marginTop="30dp"
-        android:layout_alignLeft="@+id/editeTextEmailid"/>
+        android:layout_alignLeft="@+id/editeTextEmailid"
+        android:onClick="onClick"/>
 
     <TextView
         android:id="@+id/txt1"

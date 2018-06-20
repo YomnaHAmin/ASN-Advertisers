@@ -21,4 +21,20 @@ public class __Info {
     public static double lng;
     public static double atit;
 
+    public static void logout(){
+        ID = -1;
+        name = null;
+        email = null;
+        serviceType = null;
+        slogan = null;
+        phone = null;
+        adrs = null;
+        workTime = null;
+        iconURL = null;
+        licence = null;
+        lat = 0;
+        lng = 0;
+        atit = 0;
+    }
+
 }

@@ -35,6 +35,7 @@ public class ProfileFragment extends Fragment{
         atit = (TextView) rootView.findViewById(R.id.locationAtit);
 
         name.setText(__Info.name);
+//        name.setText("Yomna");
         slogan.setText(__Info.slogan);
         serviceType.setText(__Info.serviceType);
         availibility.setText(__Info.workTime);
@@ -51,6 +52,10 @@ public class ProfileFragment extends Fragment{
     }
 
     public void editDataBtnOnClick(View view){
-        startActivity(new Intent(this.getContext(), EditDataActivity.class));
+        startActivity(new Intent(getActivity(), EditDataActivity.class));
+    }
+    public void logoutOnClick(View view){
+        SharedPrefManager.getInstance(this.getContext()).logout();
+        startActivity(new Intent(this.getContext(), HomeActivity.class));
     }
 }

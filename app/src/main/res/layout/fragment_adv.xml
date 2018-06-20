@@ -26,11 +26,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <Button
-            android:id="@+id/editDataBtn"
+            android:id="@+id/addAdBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Advertisment"
-            android:layout_marginBottom="5px"/>
+            android:layout_marginBottom="5px"
+            android:onClick="addAdBtnOnClick"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

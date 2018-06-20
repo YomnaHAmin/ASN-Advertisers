@@ -7,7 +7,7 @@ public class AdvertismentClass {
     private String title;
     private String description;
     private String imgURL;
-    private Date expirationDate = null;
+    private String expirationDate = null;
     private int ID;
 
 
@@ -17,7 +17,7 @@ public class AdvertismentClass {
         this.description = description;
         this.imgURL = imgPath;
     }
-    AdvertismentClass(int ID, String title, String description, String imgPath, Date expirationDate){
+    AdvertismentClass(int ID, String title, String description, String imgPath, String expirationDate){
         this.ID = ID;
         this.title = title;
         this.description = description;
@@ -34,7 +34,7 @@ public class AdvertismentClass {
     public void setImgURL(String imgURL){
         this.imgURL = imgURL;
     }
-    public void setExpirationDate(Date expirationDate){ this.expirationDate = expirationDate; }
+    public void setExpirationDate(String expirationDate){ this.expirationDate = expirationDate; }
 
     public String getDescription() {
         return description;
@@ -45,5 +45,5 @@ public class AdvertismentClass {
     public String getImgURL() {
         return imgURL;
     }
-    public Date getExpirationDate() { return expirationDate; }
+    public String getExpirationDate() { return expirationDate; }
 }
