@@ -41,6 +41,7 @@ public class EditDataActivity extends AppCompatActivity {
 
     EditText name, slogan, serviceType, availibility, adrs, phone, email, licence;
     String newIcon, newName, newSlogan, newServiceType, newAvailibility, newAdrs, newPhone, newEmail, newLicence;
+    TextView newIconValue, rmvNewImg;
     Uri newIconUri;
     Bitmap newIconBitmap;
 
@@ -57,6 +58,9 @@ public class EditDataActivity extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.phoneEdit);
         email = (EditText) findViewById(R.id.emailEdit);
         licence = (EditText) findViewById(R.id.licenceEdit);
+
+        newIconValue = (TextView)findViewById(R.id.chsImgBtn);
+        rmvNewImg = (TextView)findViewById(R.id.newImgRmvBtn);
 
         name.setText(__Info.name);
         slogan.setText(__Info.slogan);
@@ -100,9 +104,6 @@ public class EditDataActivity extends AppCompatActivity {
 
         if(requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && data != null){
             newIconUri = data.getData();
-            TextView x = new TextView(this);
-            x = (TextView) findViewById(R.id.chsImgBtn);
-            x.setText(newIconUri.toString());
 
             try {
                 newIconBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),newIconUri);
@@ -113,6 +114,9 @@ public class EditDataActivity extends AppCompatActivity {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             newIconBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             newIcon = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+
+            newIconValue.setText(newIconUri.toString());
+            rmvNewImg.setVisibility(View.VISIBLE);
         }
 
     }
@@ -139,6 +143,13 @@ public class EditDataActivity extends AppCompatActivity {
                 return;
         }
     }
+
+    public void newImgRmvBtnOnClick(View view){
+        newIcon = null;
+        newIconValue.setText("Choose Image");
+        view.setVisibility(View.GONE);
+    }
+
     public void svChngsBtnOnClick(View view){
 
         newName = name.getText().toString().trim();

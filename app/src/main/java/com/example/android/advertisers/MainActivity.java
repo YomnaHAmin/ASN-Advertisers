@@ -158,7 +158,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, HomeActivity.class));
     }
 
-    public void addAdBtnOnClick(View view){
-        startActivity(new Intent(this, AddAdvActivity.class));
-    }
+//    public void addAdBtnOnClick(View view){
+//        startActivity(new Intent(this, AddAdvActivity.class));
+//    }
+
 }

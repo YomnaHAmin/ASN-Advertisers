@@ -48,9 +48,9 @@ public class SignupActivity extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
 
-    EditText name, slogan, serviceType, availibility, adrs, phone, email, licence;
+    EditText name, slogan, serviceType, availibility, adrs, phone, email, licence, password, cnfrmPassword;
     String newIcon, newName, newSlogan, newServiceType, newAvailibility, newAdrs, newPhone, newEmail, newLicence,
-            newLat, newLng, newAtit;
+            newLat, newLng, newAtit, newPassword, newCnfrmPassword;
     Uri newIconUri;
     Bitmap newIconBitmap;
 
@@ -68,6 +68,8 @@ public class SignupActivity extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.phoneEdit);
         email = (EditText) findViewById(R.id.emailEdit);
         licence = (EditText) findViewById(R.id.licenceEdit);
+        password = (EditText) findViewById(R.id.passwordEdit);
+        cnfrmPassword = (EditText) findViewById(R.id.passwordCnfrmEdit);
 
         viewLocationValue = (TextView) findViewById(R.id.viewLoactionValue);
 
@@ -213,10 +215,16 @@ public class SignupActivity extends AppCompatActivity {
         newPhone = phone.getText().toString().trim();
         newEmail = email.getText().toString().trim();
         newLicence = licence.getText().toString().trim();
+        newPassword = password.getText().toString().trim();
+        newCnfrmPassword = cnfrmPassword.getText().toString().trim();
 
         if(newName == null || newServiceType == null || newAdrs == null || newEmail == null || newLicence == null
-                || newIcon == null || newLng == null || newLat == null || newAtit == null){
+                || newIcon == null || newLng == null || newLat == null || newAtit == null
+                || newPassword == null || newCnfrmPassword == null){
             Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG).show();
+        }
+        else if(newPassword != newCnfrmPassword){
+            Toast.makeText(this, "The two passwords must be the same", Toast.LENGTH_LONG).show();
         }
         else{
             final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -286,6 +294,7 @@ public class SignupActivity extends AppCompatActivity {
                     params.put("lat", newLat);
                     params.put("lng", newLng);
                     params.put("atit", newAtit);
+                    params.put("password", newPassword);
                     return params;
                 }
 //                protected Map<String, DataPart> getByteData() {

@@ -261,15 +261,30 @@
                 android:textColor="#00009F"
                 android:textColorLink="#00009F"
                 android:layout_marginLeft="5dp"
-                android:onClick="chsImgBtnOnClick"/>*
-            <Button
-                android:id="@+id/svChngsBtn"
+                android:onClick="chsImgBtnOnClick"/>
+            <TextView
+                android:id="@+id/newImgRmvBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save Changes"
-                android:onClick="svChngsBtnOnClick"
-                android:layout_marginLeft="50dp"/>
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+                android:maxWidth="150dp"
+                android:onClick="newImgRmvBtnOnClick"
+                android:text="Remove"
+                android:textColor="#A00000"
+                android:textColorLink="#A00000"
+                android:textStyle="italic"
+                android:paddingLeft="10dp"
+                android:visibility="gone"/>
+
         </LinearLayout>
+        <Button
+            android:id="@+id/svChngsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save Changes"
+            android:onClick="svChngsBtnOnClick"
+            android:layout_margin="10dp"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

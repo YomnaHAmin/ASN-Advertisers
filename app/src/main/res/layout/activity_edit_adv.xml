@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddAdvActivity">
+    tools:context=".EditAdvActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,13 +12,13 @@
         android:layout_height="match_parent">
 
         <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Create New Advertisement"-->
-            <!--android:textScaleX="1.6"-->
-            <!--android:textColor="#000000"-->
-            <!--android:textStyle="normal"-->
-            <!--android:padding="10dp"/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Create New Advertisement"-->
+        <!--android:textScaleX="1.6"-->
+        <!--android:textColor="#000000"-->
+        <!--android:textStyle="normal"-->
+        <!--android:padding="10dp"/>-->
         <!---->
         <LinearLayout
             android:id="@+id/title"
@@ -125,7 +125,6 @@
                 android:visibility="gone"/>
 
 
-
         </LinearLayout>
         <LinearLayout
             android:id="@+id/img"
@@ -141,11 +140,11 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" * "
-                android:textColor="#A00000"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text=" * "-->
+                <!--android:textColor="#A00000"/>-->
             <TextView
                 android:id="@+id/setImgBtn"
                 android:layout_width="wrap_content"
@@ -158,15 +157,30 @@
                 android:textColor="#00009F"
                 android:textColorLink="#00009F"
                 android:textStyle="italic" />
+            <TextView
+                android:id="@+id/newImgRmvBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:clickable="true"
+                android:maxWidth="150dp"
+                android:onClick="newImgRmvBtnOnClick"
+                android:text="Remove"
+                android:textColor="#A00000"
+                android:textColorLink="#A00000"
+                android:textStyle="italic"
+                android:paddingLeft="10dp"
+                android:visibility="gone"/>
+
 
         </LinearLayout>
         <Button
             android:id="@+id/addAdBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Advertisement"
+            android:text="Edit Advertisement"
             android:layout_margin="10dp"
-            android:onClick="addAdBtnOnClick"/>
+            android:onClick="editAdBtnOnClick"/>
 
     </LinearLayout>
 

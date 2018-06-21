@@ -2,6 +2,8 @@ package com.example.android.advertisers;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,10 +36,10 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<AdvertismentClass> ads;
+    public static List<AdvertismentClass> ads;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_adv, container, false);
 
@@ -48,7 +50,17 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
 
         // Define the array of advertisments and fill it
         ads = new ArrayList<>();
-        loadRecyclerViewData();
+        ads.add(new AdvertismentClass(
+                1,
+                "Test title",
+                "Test desc",
+                "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
+                "5/7/2018"
+        ));
+        adapter = new RecyclerViewAdapterClass(ads, this.getContext());
+        recyclerView.setAdapter(adapter);
+
+//        loadRecyclerViewData();
         return rootView;
     }
 
@@ -80,14 +92,24 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
 
                             for(int i = 0; i < obj.length(); i++){
                                 JSONObject o = obj.getJSONObject(String.valueOf(i));
-                                AdvertismentClass ad = new AdvertismentClass(
-                                        o.getInt("ID"),
-                                        o.getString("title"),
-                                        o.getString("desc"),
-                                        o.getString("imgURL"),
-                                        o.getString("expirationDate")
-                                );
-                                ads.add(ad);
+                                boolean alreadyShownAd = false;
+                                for(AdvertismentClass shownAd : ads) {
+                                    if (shownAd.getID() == o.getInt("ID")) {
+                                        alreadyShownAd = true;
+                                        break;
+                                    }
+                                }
+                                if(!alreadyShownAd){
+                                    AdvertismentClass ad = new AdvertismentClass(
+                                            o.getInt("ID"),
+                                            o.getString("title"),
+                                            o.getString("desc"),
+                                            o.getString("imgURL"),
+                                            o.getString("expirationDate")
+                                    );
+                                    ads.add(ad);
+                                    break;
+                                }
                             }
 
 
@@ -119,7 +141,6 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
         RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
         requestQueue.add(stringRequest);
     }
-
 
     @Override
     public void onPauseFragment() {

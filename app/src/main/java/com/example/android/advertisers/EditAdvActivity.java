@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -39,7 +37,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddAdvActivity extends AppCompatActivity {
+public class EditAdvActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMG = 1;
     private static final int RESULT_PROCESS_IMG = 100;
 
@@ -47,21 +45,33 @@ public class AddAdvActivity extends AppCompatActivity {
 
     String title, desc, img, expirationDate;
     EditText titleEdit, descEdit;
-    TextView imgValue, expirationDateValue, rmvExpirationDate;
+    TextView imgValue, expirationDateValue, rmvExpirationDate, rmvNewImg;
     Uri imgUri;
     Bitmap imgBitmap;
 
+    int adPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_adv);
+        setContentView(R.layout.activity_edit_adv);
+
+        Intent i = getIntent();
+        adPosition = i.getIntExtra("adPosition", -1);
 
         titleEdit = (EditText) findViewById(R.id.titleEdit);
         descEdit = (EditText) findViewById(R.id.descEdit);
         expirationDateValue = (TextView) findViewById(R.id.expDateBtn);
         imgValue = (TextView) findViewById(R.id.setImgBtn);
         rmvExpirationDate = (TextView) findViewById(R.id.expDateRmvBtn);
+        rmvNewImg = (TextView)findViewById(R.id.newImgRmvBtn);
+
+        titleEdit.setText(AdvFragment.ads.get(adPosition).getTitle());
+        descEdit.setText(AdvFragment.ads.get(adPosition).getDescription());
+        if(AdvFragment.ads.get(adPosition).getExpirationDate() != null) {
+            expirationDateValue.setText(AdvFragment.ads.get(adPosition).getExpirationDate());
+            rmvExpirationDate.setVisibility(View.VISIBLE);
+        }
 
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -115,7 +125,7 @@ public class AddAdvActivity extends AppCompatActivity {
             img = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
 
             imgValue.setText(imgUri.toString());
-
+            rmvNewImg.setVisibility(View.VISIBLE);
         }
 
     }
@@ -158,17 +168,24 @@ public class AddAdvActivity extends AppCompatActivity {
 //        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         datePickerDialog.show();
     }
+
     public void expDateRmvBtnOnClick(View view){
         expirationDate = null;
         expirationDateValue.setText("Pick Expiration Date");
         view.setVisibility(View.GONE);
     }
 
-    public void addAdBtnOnClick(View view){
+    public void newImgRmvBtnOnClick(View view){
+        img = null;
+        imgValue.setText("Choose Image");
+        view.setVisibility(View.GONE);
+    }
+
+    public void editAdBtnOnClick(View view){
         title = titleEdit.getText().toString().trim();
         desc = descEdit.getText().toString().trim();
 
-        if(title == null || desc == null || img == null) {
+        if(title == null || desc == null) {
             Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG);
         }
         else{
@@ -178,13 +195,21 @@ public class AddAdvActivity extends AppCompatActivity {
 
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
-                    __Constants.URL_ADD_ADS,
+                    __Constants.URL_EDIT_AD,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             progressDialog.dismiss();
                             try {
                                 JSONObject obj = new JSONObject(response);
+
+                                AdvFragment.ads.get(adPosition).setTitle(title);
+                                AdvFragment.ads.get(adPosition).setDescription(desc);
+                                AdvFragment.ads.get(adPosition).setExpirationDate(expirationDate);
+                                if(img != null){
+                                    AdvFragment.ads.get(adPosition).setImgURL(obj.getString("imgURL"));
+                                }
+
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                             } catch (JSONException e) {
@@ -210,15 +235,16 @@ public class AddAdvActivity extends AppCompatActivity {
                     params.put("imgName", String.valueOf(__Info.ID) + "_" + title);
                     return params;
                 }
-    //                protected Map<String, DataPart> getByteData() {
-    //                    Map<String, DataPart> params = new HashMap<>();
-    //                    params.put("pic", new DataPart(__Info.ID + ".png", getFileDataFromDrawable(newIcon)));
-    //                    return params;
-    //                }
+                //                protected Map<String, DataPart> getByteData() {
+                //                    Map<String, DataPart> params = new HashMap<>();
+                //                    params.put("pic", new DataPart(__Info.ID + ".png", getFileDataFromDrawable(newIcon)));
+                //                    return params;
+                //                }
 
             };
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
         }
     }
+
 }
