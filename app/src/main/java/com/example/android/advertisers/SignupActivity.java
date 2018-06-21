@@ -48,6 +48,8 @@ public class SignupActivity extends AppCompatActivity {
     LocationManager locationManager;
     LocationListener locationListener;
 
+    ProgressDialog progressDialog;
+
     EditText name, slogan, serviceType, availibility, adrs, phone, email, licence, password, cnfrmPassword;
     String newIcon, newName, newSlogan, newServiceType, newAvailibility, newAdrs, newPhone, newEmail, newLicence,
             newLat, newLng, newAtit, newPassword, newCnfrmPassword;
@@ -73,6 +75,7 @@ public class SignupActivity extends AppCompatActivity {
 
         viewLocationValue = (TextView) findViewById(R.id.viewLoactionValue);
 
+        progressDialog = new ProgressDialog(this);
     }
 
     // Handling uploading image from gallery
@@ -135,6 +138,8 @@ public class SignupActivity extends AppCompatActivity {
                 newAtit = String.valueOf(location.getAltitude());
 
                 viewLocationValue.setText(newLat + "  " + newLng + "  " + newAtit);
+                locationManager.removeUpdates(locationListener);
+                progressDialog.dismiss();
             }
 
             @Override
@@ -201,8 +206,9 @@ public class SignupActivity extends AppCompatActivity {
     }
     @SuppressLint("MissingPermission")
     private void getLocation(){
-        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
-        locationManager.removeUpdates(locationListener);
+        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+        progressDialog.setMessage("Collecting Data ... ");
+        progressDialog.show();
     }
 
     // Sending advertiser's info to the server
@@ -223,11 +229,10 @@ public class SignupActivity extends AppCompatActivity {
                 || newPassword == null || newCnfrmPassword == null){
             Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG).show();
         }
-        else if(newPassword != newCnfrmPassword){
+        else if(!newPassword.equals(newCnfrmPassword)){
             Toast.makeText(this, "The two passwords must be the same", Toast.LENGTH_LONG).show();
         }
         else{
-            final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Saving Your Data ... ");
             progressDialog.show();
 

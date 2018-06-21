@@ -44,7 +44,7 @@
                 android:id="@+id/titleEdit"
                 android:layout_width="250dp"
                 android:layout_height="35dp"
-                android:paddingBottom="100dp"/>
+                android:paddingBottom="5dp"/>
 
         </LinearLayout>
         <LinearLayout
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:inputType="textMultiLine"
-                android:paddingBottom="100dp"/>
+                android:paddingBottom="5dp"/>
 
         </LinearLayout>
         <LinearLayout
