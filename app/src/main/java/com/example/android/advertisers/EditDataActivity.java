@@ -39,8 +39,9 @@ public class EditDataActivity extends AppCompatActivity {
     private static final int RESULT_LOAD_IMG = 1;
     private static final int RESULT_PROCESS_IMG = 100;
 
-    EditText name, slogan, serviceType, availibility, adrs, phone, email, licence;
-    String newIcon, newName, newSlogan, newServiceType, newAvailibility, newAdrs, newPhone, newEmail, newLicence;
+    EditText name, slogan, serviceType, availibility, adrs, phone, email, licence, crdtCrd;
+    String newIcon, newName, newSlogan, newServiceType, newAvailibility,
+            newAdrs, newPhone, newEmail, newLicence, newCreditCard;
     TextView newIconValue, rmvNewImg;
     Uri newIconUri;
     Bitmap newIconBitmap;
@@ -58,6 +59,7 @@ public class EditDataActivity extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.phoneEdit);
         email = (EditText) findViewById(R.id.emailEdit);
         licence = (EditText) findViewById(R.id.licenceEdit);
+        crdtCrd = (EditText) findViewById(R.id.creditCardEdit);
 
         newIconValue = (TextView)findViewById(R.id.chsImgBtn);
         rmvNewImg = (TextView)findViewById(R.id.newImgRmvBtn);
@@ -70,6 +72,7 @@ public class EditDataActivity extends AppCompatActivity {
         phone.setText(__Info.phone);
         email.setText(__Info.email);
         licence.setText(__Info.licence);
+        crdtCrd.setText(__Info.creditCard);
 
     }
 
@@ -160,8 +163,10 @@ public class EditDataActivity extends AppCompatActivity {
         newPhone = phone.getText().toString().trim();
         newEmail = email.getText().toString().trim();
         newLicence = licence.getText().toString().trim();
+        newCreditCard = crdtCrd.getText().toString().trim();
 
-        if(newName == null || newServiceType == null || newAdrs == null || newEmail == null || newLicence == null ){
+        if(newName == null || newServiceType == null || newAdrs == null || newEmail == null
+                || newLicence == null || newCreditCard == null  ){
             Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG);
         }
         else{
@@ -192,6 +197,7 @@ public class EditDataActivity extends AppCompatActivity {
                                         obj.getString("phone"),
                                         obj.getString("email"),
                                         obj.getString("licence"),
+                                        obj.getString("creditCard"),
                                         obj.getString("iconURL")
                                 );
 
@@ -234,6 +240,7 @@ public class EditDataActivity extends AppCompatActivity {
                     params.put("phone", newPhone);
                     params.put("email", newEmail);
                     params.put("licence", newLicence);
+                    params.put("licence", newCreditCard);
                     params.put("icon", newIcon);
                     params.put("iconName", String.valueOf(__Info.ID) + "_" + __Info.name);
                     return params;

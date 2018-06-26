@@ -51,9 +51,9 @@ public class SignupActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    EditText name, slogan, serviceType, availibility, adrs, phone, email, licence, password, cnfrmPassword;
+    EditText name, slogan, serviceType, availibility, adrs, phone, email, licence, password, cnfrmPassword, crdtCrd;
     String newIcon, newName, newSlogan, newServiceType, newAvailibility, newAdrs, newPhone, newEmail, newLicence,
-            newLat, newLng, newAtit, newPassword, newCnfrmPassword;
+            newLat, newLng, newAtit, newPassword, newCnfrmPassword, newCreditCard;
     Uri newIconUri;
     Bitmap newIconBitmap;
 
@@ -73,6 +73,7 @@ public class SignupActivity extends AppCompatActivity {
         licence = (EditText) findViewById(R.id.licenceEdit);
         password = (EditText) findViewById(R.id.passwordEdit);
         cnfrmPassword = (EditText) findViewById(R.id.passwordCnfrmEdit);
+        crdtCrd = (EditText) findViewById(R.id.creditCardEdit);
 
         viewLocationValue = (TextView) findViewById(R.id.viewLoactionValue);
 
@@ -224,10 +225,11 @@ public class SignupActivity extends AppCompatActivity {
         newLicence = licence.getText().toString().trim();
         newPassword = password.getText().toString().trim();
         newCnfrmPassword = cnfrmPassword.getText().toString().trim();
+        newCreditCard = crdtCrd.getText().toString().trim();
 
         if(newName == null || newServiceType == null || newAdrs == null || newEmail == null || newLicence == null
                 || newIcon == null || newLng == null || newLat == null || newAtit == null
-                || newPassword == null || newCnfrmPassword == null){
+                || newPassword == null || newCnfrmPassword == null || newCreditCard == null){
             Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG).show();
         }
         else if(!newPassword.equals(newCnfrmPassword)){
@@ -263,6 +265,7 @@ public class SignupActivity extends AppCompatActivity {
                                     obj.getString("phone"),
                                     obj.getString("email"),
                                     obj.getString("licence"),
+                                    obj.getString("creditCard"),
 //                                    obj.getString("iconURL"),
                                         "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
                                     obj.getDouble("lng"),
@@ -306,6 +309,7 @@ public class SignupActivity extends AppCompatActivity {
                     params.put("lng", newLng);
                     params.put("atit", newAtit);
                     params.put("password", newPassword);
+                    params.put("creditCard", newCreditCard);
 
                     Log.d("in signup request", "request sent");
 

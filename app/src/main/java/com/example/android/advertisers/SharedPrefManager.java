@@ -26,6 +26,7 @@ public class SharedPrefManager {
     private static final String KEY_USER_ADRS = "userAdrs";
     private static final String KEY_USER_WORKING_TIME = "userWorkingTime";
     private static final String KEY_USER_LICENCE = "userLicence";
+    private static final String KEY_USER_CREDIT_CARD = "userCreditCard";
     private static final String KEY_USER_iconURL = "userIconURL";
     private static final String KEY_USER_LAT = "userLat";
     private static final String KEY_USER_LNG = "userLng";
@@ -53,6 +54,7 @@ public class SharedPrefManager {
             String phone,
             String email,
             String licence,
+            String crdtCrd,
             String iconURL,
             double lng,
             double lat,
@@ -70,6 +72,7 @@ public class SharedPrefManager {
         editor.putString(KEY_USER_PHONE, phone);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USER_LICENCE, licence);
+        editor.putString(KEY_USER_CREDIT_CARD, crdtCrd);
         editor.putString(KEY_USER_iconURL, iconURL);
         editor.putString(KEY_USER_LAT, String.valueOf(lat));
         editor.putString(KEY_USER_LNG, String.valueOf(lng));
@@ -92,6 +95,7 @@ public class SharedPrefManager {
             String phone,
             String email,
             String licence,
+            String crdtCrd,
             String iconURL){
 
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -106,6 +110,7 @@ public class SharedPrefManager {
         editor.putString(KEY_USER_PHONE, phone);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USER_LICENCE, licence);
+        editor.putString(KEY_USER_CREDIT_CARD, crdtCrd);
         editor.putString(KEY_USER_iconURL, iconURL);
 
         editor.apply();
@@ -141,6 +146,7 @@ public class SharedPrefManager {
         __Info.workTime = sharedPreferences.getString(KEY_USER_WORKING_TIME, "");
         __Info.iconURL = sharedPreferences.getString(KEY_USER_iconURL, "");
         __Info.licence = sharedPreferences.getString(KEY_USER_LICENCE, "");
+        __Info.creditCard = sharedPreferences.getString(KEY_USER_CREDIT_CARD, "");
 
         if(newData){
             __Info.ID = sharedPreferences.getInt(KEY_USER_ID, 0);

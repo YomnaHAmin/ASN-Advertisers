@@ -17,6 +17,7 @@ public class __Info {
     public static String iconURL;
 
     public static String licence;
+    public static String creditCard;
     public static double lat;
     public static double lng;
     public static double atit;
