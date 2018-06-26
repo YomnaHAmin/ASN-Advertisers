@@ -2,7 +2,7 @@ package com.example.android.advertisers;
 
 import java.util.Date;
 
-public class AdvertismentClass {
+public class AdvertisementClass {
 
     private String title;
     private String description;
@@ -11,13 +11,13 @@ public class AdvertismentClass {
     private int ID;
 
 
-    AdvertismentClass(int ID, String title, String description, String imgPath){
+    AdvertisementClass(int ID, String title, String description, String imgPath){
         this.ID = ID;
         this.title = title;
         this.description = description;
         this.imgURL = imgPath;
     }
-    AdvertismentClass(int ID, String title, String description, String imgPath, String expirationDate){
+    AdvertisementClass(int ID, String title, String description, String imgPath, String expirationDate){
         this.ID = ID;
         this.title = title;
         this.description = description;

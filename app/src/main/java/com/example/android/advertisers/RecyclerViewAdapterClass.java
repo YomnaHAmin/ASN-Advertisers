@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +19,11 @@ import java.util.List;
 public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewAdapterClass.ViewHolder> {
     private View.OnClickListener mOnClickListener;
 
-    private List<AdvertismentClass> ads;
+    private List<AdvertisementClass> ads;
     private Context context;
     private RecyclerView mRecyclerView;
 
-    public RecyclerViewAdapterClass(List<AdvertismentClass> ads, Context context) {
+    public RecyclerViewAdapterClass(List<AdvertisementClass> ads, Context context) {
         this.ads = ads;
         this.context = context;
     }
@@ -39,7 +39,7 @@ public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewA
             @Override
             public void onClick(View view) {
                 int itemPosition = mRecyclerView.getChildLayoutPosition(view);
-                AdvertismentClass item = ads.get(itemPosition);
+                AdvertisementClass item = ads.get(itemPosition);
                 Toast.makeText(context, item.getTitle(), Toast.LENGTH_LONG).show();
                 Intent i = new Intent(context, EditAdvActivity.class);
                 i.putExtra("adPosition", itemPosition);
@@ -54,13 +54,19 @@ public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewA
     // Called after calling the above onCreateViewHolder
     // Binds the Recycler View with data
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AdvertismentClass ad = ads.get(position);
+        AdvertisementClass ad = ads.get(position);
 
         holder.adTitle.setText(ad.getTitle());
         holder.adDesc.setText(ad.getDescription());
-
 //        Log.d("Show Ad Img",ad.getImgURL());
         Picasso.with(context).load(ad.getImgURL()).into(holder.adImg);
+        if(ad.getExpirationDate() != null){
+            holder.expDateValue.setText(ad.getExpirationDate());
+            holder.expDate.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.expDate.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -78,8 +84,8 @@ public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewA
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView adImg;
-        public TextView adTitle;
-        public TextView adDesc;
+        public TextView adTitle, adDesc, expDateValue;
+        public LinearLayout expDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -87,6 +93,8 @@ public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewA
             adImg = (ImageView) itemView.findViewById(R.id.adImg);
             adTitle = (TextView) itemView.findViewById(R.id.adTitle);
             adDesc = (TextView) itemView.findViewById(R.id.adDesc);
+            expDateValue = (TextView) itemView.findViewById(R.id.expDateValue);
+            expDate = (LinearLayout) itemView.findViewById(R.id.expDate);
         }
     }
 }

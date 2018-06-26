@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -185,18 +186,25 @@ public class AddAdvActivity extends AppCompatActivity {
                             progressDialog.dismiss();
                             try {
                                 JSONObject obj = new JSONObject(response);
+                                Log.d("Response", ""+response);
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Log.d("JSON Exception", "" + e);
+
                             }
+//                            Log.d("Response", ""+response);
+//                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                            finish();
 
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            Log.d("Response Error", "" + error);
                         }
                     }
             ){
@@ -208,6 +216,9 @@ public class AddAdvActivity extends AppCompatActivity {
                     params.put("expirationDate", expirationDate);
                     params.put("img", img);
                     params.put("imgName", String.valueOf(__Info.ID) + "_" + title);
+                    params.put("ID", String.valueOf(__Info.ID));
+
+                    Log.d("In Add Ad Request", "Request Sent");
                     return params;
                 }
     //                protected Map<String, DataPart> getByteData() {

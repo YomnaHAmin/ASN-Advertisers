@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -250,6 +251,8 @@ public class SignupActivity extends AppCompatActivity {
                                 Parse the JSON object here and update _info
                              */
 
+                                Log.d("Response Error", obj.getString("error"));
+                                Log.d("Response Msg", obj.getString("message"));
                                 SharedPrefManager.getInstance(getApplicationContext()).setUserInfo(
                                     obj.getInt("ID"),
                                     obj.getString("name"),
@@ -260,7 +263,8 @@ public class SignupActivity extends AppCompatActivity {
                                     obj.getString("phone"),
                                     obj.getString("email"),
                                     obj.getString("licence"),
-                                    obj.getString("iconURL"),
+//                                    obj.getString("iconURL"),
+                                        "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
                                     obj.getDouble("lng"),
                                     obj.getDouble("lat"),
                                     obj.getDouble("atit")
@@ -272,6 +276,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Log.d("in JSON exception", "There's JSON exception - " + e);
                             }
 
                         }
@@ -279,6 +284,7 @@ public class SignupActivity extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            Log.d("in error listener", "Error in response - " + error);
 
                         }
                     }
@@ -300,6 +306,9 @@ public class SignupActivity extends AppCompatActivity {
                     params.put("lng", newLng);
                     params.put("atit", newAtit);
                     params.put("password", newPassword);
+
+                    Log.d("in signup request", "request sent");
+
                     return params;
                 }
 //                protected Map<String, DataPart> getByteData() {

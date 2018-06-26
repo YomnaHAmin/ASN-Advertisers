@@ -179,8 +179,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit Advertisement"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
             android:onClick="editAdBtnOnClick"/>
+        <Button
+            android:id="@+id/rmvAdBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove Advertisement"
+            android:layout_marginLeft="10dp"
+            android:background="#770000"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:onClick="rmvAdBtnOnClick"/>
 
     </LinearLayout>
 

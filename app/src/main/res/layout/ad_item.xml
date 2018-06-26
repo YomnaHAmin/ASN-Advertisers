@@ -33,6 +33,34 @@
                     android:layout_marginBottom="5dp"
                     android:text="Title"/>
 
+                <LinearLayout
+                    android:id="@+id/expDate"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+                    <TextView
+                        android:id="@+id/expDateTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Expiration Date "
+                        android:textColor="#770000"
+                        android:textStyle="italic"
+                        android:textSize="10dp"/>
+                    <TextView
+                        android:id="@+id/expDateValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:text="20/12/2020"
+                        android:textColor="#770000"
+                        android:textStyle="italic"
+                        android:textSize="10dp"/>
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/adDesc"
                     android:layout_width="match_parent"

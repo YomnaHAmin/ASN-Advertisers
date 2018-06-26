@@ -77,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                                         obj.getString("phone"),
                                         obj.getString("email"),
                                         obj.getString("licence"),
-                                        obj.getString("iconURL"),
+//                                        obj.getString("iconURL"),
+                                        "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
                                         obj.getDouble("lng"),
                                         obj.getDouble("lat"),
                                         obj.getDouble("atit")

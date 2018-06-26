@@ -1,8 +1,6 @@
 package com.example.android.advertisers;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,7 +19,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,11 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdvFragment extends Fragment implements FragmentLifeCycle{
+public class AdvFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    public static List<AdvertismentClass> ads;
+    public static List<AdvertisementClass> ads;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -50,7 +45,7 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
 
         // Define the array of advertisments and fill it
         ads = new ArrayList<>();
-        ads.add(new AdvertismentClass(
+        ads.add(new AdvertisementClass(
                 1,
                 "Test title",
                 "Test desc",
@@ -85,6 +80,8 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
                         progressDialog.dismiss();
                         try {
                             JSONObject obj = new JSONObject(response);
+                            Log.d("Response", ""+response);
+
 
                             /*
                                 Parse the JSON object here and fill the ads list
@@ -93,14 +90,14 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
                             for(int i = 0; i < obj.length(); i++){
                                 JSONObject o = obj.getJSONObject(String.valueOf(i));
                                 boolean alreadyShownAd = false;
-                                for(AdvertismentClass shownAd : ads) {
+                                for(AdvertisementClass shownAd : ads) {
                                     if (shownAd.getID() == o.getInt("ID")) {
                                         alreadyShownAd = true;
                                         break;
                                     }
                                 }
                                 if(!alreadyShownAd){
-                                    AdvertismentClass ad = new AdvertismentClass(
+                                    AdvertisementClass ad = new AdvertisementClass(
                                             o.getInt("ID"),
                                             o.getString("title"),
                                             o.getString("desc"),
@@ -140,15 +137,5 @@ public class AdvFragment extends Fragment implements FragmentLifeCycle{
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
         requestQueue.add(stringRequest);
-    }
-
-    @Override
-    public void onPauseFragment() {
-
-    }
-
-    @Override
-    public void onResumeFragment() {
-        loadRecyclerViewData();
     }
 }

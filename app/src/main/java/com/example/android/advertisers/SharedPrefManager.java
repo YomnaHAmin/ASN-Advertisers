@@ -19,6 +19,7 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "advSharedPref";
     private static final String KEY_USERNAME = "userName";
     private static final String KEY_USER_EMAIL = "userEmail";
+    private static final String KEY_USER_SLOGAN = "userSlogan";
     private static final String KEY_USER_ID = "userID";
     private static final String KEY_USER_SERVICE_TYPE = "userServiceType";
     private static final String KEY_USER_PHONE = "userPhone";
@@ -61,24 +62,23 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(KEY_USER_ID, ID);
-        editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USERNAME, name);
+        editor.putString(KEY_USER_SLOGAN, slogan);
+        editor.putString(KEY_USER_SERVICE_TYPE, serviceType);
+        editor.putString(KEY_USER_ADRS, adrs);
+        editor.putString(KEY_USER_WORKING_TIME, workingTime);
+        editor.putString(KEY_USER_PHONE, phone);
+        editor.putString(KEY_USER_EMAIL, email);
+        editor.putString(KEY_USER_LICENCE, licence);
+        editor.putString(KEY_USER_iconURL, iconURL);
+        editor.putString(KEY_USER_LAT, String.valueOf(lat));
+        editor.putString(KEY_USER_LNG, String.valueOf(lng));
+        editor.putString(KEY_USER_ATIT, String.valueOf(atit));
+
 
         editor.apply();
 
-        __Info.ID = ID;
-        __Info.name = name;
-        __Info.email = email;
-        __Info.serviceType = serviceType;
-        __Info.slogan = slogan;
-        __Info.adrs = adrs;
-        __Info.phone = phone;
-        __Info.workTime = workingTime;
-        __Info.iconURL = iconURL;
-        __Info.licence = licence;
-        __Info.lat = lat;
-        __Info.lng = lng;
-        __Info.atit = atit;
+        storeUserInfo(true);
 
         return true;
 
@@ -98,21 +98,19 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(KEY_USER_ID, __Info.ID);
-        editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USERNAME, name);
+        editor.putString(KEY_USER_SLOGAN, slogan);
+        editor.putString(KEY_USER_SERVICE_TYPE, serviceType);
+        editor.putString(KEY_USER_ADRS, adrs);
+        editor.putString(KEY_USER_WORKING_TIME, workingTime);
+        editor.putString(KEY_USER_PHONE, phone);
+        editor.putString(KEY_USER_EMAIL, email);
+        editor.putString(KEY_USER_LICENCE, licence);
+        editor.putString(KEY_USER_iconURL, iconURL);
 
         editor.apply();
 
-        __Info.name = name;
-        __Info.email = email;
-        __Info.serviceType = serviceType;
-        __Info.slogan = slogan;
-        __Info.adrs = adrs;
-        __Info.phone = phone;
-        __Info.workTime = workingTime;
-        __Info.iconURL = iconURL;
-        __Info.licence = licence;
-
+        storeUserInfo(false);
         return true;
 
     }
@@ -130,6 +128,28 @@ public class SharedPrefManager {
 //
 //        return true;
 //    }
+
+    public boolean storeUserInfo(boolean newData){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        __Info.name = sharedPreferences.getString(KEY_USERNAME, "");
+        __Info.email = sharedPreferences.getString(KEY_USER_EMAIL, "");
+        __Info.serviceType = sharedPreferences.getString(KEY_USER_SERVICE_TYPE, "");
+        __Info.slogan = sharedPreferences.getString(KEY_USER_SLOGAN, "");
+        __Info.adrs = sharedPreferences.getString(KEY_USER_ADRS, "");
+        __Info.phone = sharedPreferences.getString(KEY_USER_PHONE, "");
+        __Info.workTime = sharedPreferences.getString(KEY_USER_WORKING_TIME, "");
+        __Info.iconURL = sharedPreferences.getString(KEY_USER_iconURL, "");
+        __Info.licence = sharedPreferences.getString(KEY_USER_LICENCE, "");
+
+        if(newData){
+            __Info.ID = sharedPreferences.getInt(KEY_USER_ID, 0);
+            __Info.lat = Double.valueOf(sharedPreferences.getString(KEY_USER_LAT, ""));
+            __Info.lng = Double.valueOf(sharedPreferences.getString(KEY_USER_LNG, ""));
+            __Info.atit = Double.valueOf(sharedPreferences.getString(KEY_USER_ATIT, ""));
+        }
+        return true;
+    }
 
     public boolean isLoggedIn(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

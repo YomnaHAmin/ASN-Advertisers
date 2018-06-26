@@ -19,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
             finish();
+            SharedPrefManager.getInstance(this).storeUserInfo(true);
             startActivity(new Intent(this, MainActivity.class));
             return;
         }

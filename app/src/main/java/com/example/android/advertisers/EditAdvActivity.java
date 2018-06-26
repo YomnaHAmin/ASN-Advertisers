@@ -1,8 +1,10 @@
 package com.example.android.advertisers;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -42,19 +44,25 @@ public class EditAdvActivity extends AppCompatActivity {
     private static final int RESULT_PROCESS_IMG = 100;
 
     private DatePickerDialog.OnDateSetListener onDateSetListener;
+    ProgressDialog progressDialog;
 
     String title, desc, img, expirationDate;
+    int ID, ownerID;
     EditText titleEdit, descEdit;
     TextView imgValue, expirationDateValue, rmvExpirationDate, rmvNewImg;
     Uri imgUri;
     Bitmap imgBitmap;
 
     int adPosition;
+    boolean deleteAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_adv);
+
+        deleteAd = false;
+        progressDialog = new ProgressDialog(this);
 
         Intent i = getIntent();
         adPosition = i.getIntExtra("adPosition", -1);
@@ -181,6 +189,75 @@ public class EditAdvActivity extends AppCompatActivity {
         view.setVisibility(View.GONE);
     }
 
+    private void editAdRequest(final boolean deleteAd){
+        ID = AdvFragment.ads.get(adPosition).getID();
+        ownerID = __Info.ID;
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                __Constants.URL_EDIT_AD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            if(!deleteAd) {
+                                JSONObject obj = new JSONObject(response);
+
+                                AdvFragment.ads.get(adPosition).setTitle(title);
+                                AdvFragment.ads.get(adPosition).setDescription(desc);
+                                AdvFragment.ads.get(adPosition).setExpirationDate(expirationDate);
+                                if (img != null) {
+                                    AdvFragment.ads.get(adPosition).setImgURL(obj.getString("imgURL"));
+                                }
+                            }
+                            else{
+                                AdvFragment.ads.remove(adPosition);
+                            }
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("advID", String.valueOf(ID));
+                params.put("ownerID", String.valueOf(ownerID));
+                if(deleteAd){
+                    params.put("delete", "true");
+                }
+                else {
+                    params.put("delete", "false");
+                    params.put("title", title);
+                    params.put("desc", desc);
+                    params.put("expirationDate", expirationDate);
+                    params.put("img", img);
+                    params.put("imgName", String.valueOf(__Info.ID) + "_" + title);
+                }
+                return params;
+            }
+            //                protected Map<String, DataPart> getByteData() {
+            //                    Map<String, DataPart> params = new HashMap<>();
+            //                    params.put("pic", new DataPart(__Info.ID + ".png", getFileDataFromDrawable(newIcon)));
+            //                    return params;
+            //                }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     public void editAdBtnOnClick(View view){
         title = titleEdit.getText().toString().trim();
         desc = descEdit.getText().toString().trim();
@@ -188,63 +265,34 @@ public class EditAdvActivity extends AppCompatActivity {
         if(title == null || desc == null) {
             Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG);
         }
-        else{
-            final ProgressDialog progressDialog = new ProgressDialog(this);
+        else {
             progressDialog.setMessage("Saving Your Data ... ");
             progressDialog.show();
-
-            StringRequest stringRequest = new StringRequest(
-                    Request.Method.POST,
-                    __Constants.URL_EDIT_AD,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-                            try {
-                                JSONObject obj = new JSONObject(response);
-
-                                AdvFragment.ads.get(adPosition).setTitle(title);
-                                AdvFragment.ads.get(adPosition).setDescription(desc);
-                                AdvFragment.ads.get(adPosition).setExpirationDate(expirationDate);
-                                if(img != null){
-                                    AdvFragment.ads.get(adPosition).setImgURL(obj.getString("imgURL"));
-                                }
-
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }
-            ){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("title", title);
-                    params.put("desc", desc);
-                    params.put("expirationDate", expirationDate);
-                    params.put("img", img);
-                    params.put("imgName", String.valueOf(__Info.ID) + "_" + title);
-                    return params;
-                }
-                //                protected Map<String, DataPart> getByteData() {
-                //                    Map<String, DataPart> params = new HashMap<>();
-                //                    params.put("pic", new DataPart(__Info.ID + ".png", getFileDataFromDrawable(newIcon)));
-                //                    return params;
-                //                }
-
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(stringRequest);
+            editAdRequest(false);
         }
     }
 
+    public void rmvAdBtnOnClick(View view){
+        final AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Are You Sure You Want To Remove This Ad");
+        dlgAlert.setTitle("Remove Ad Confirmation");
+        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //dismiss the dialog
+                progressDialog.setMessage("Deleting This Ad ... ");
+                progressDialog.show();
+                editAdRequest(true);
+            }
+        });
+        dlgAlert.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //dismiss the dialog
+            }
+        });
+
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+
+
+    }
 }
