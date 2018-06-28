@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,10 +53,10 @@ public class AdvFragment extends Fragment {
                 "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
                 "5/7/2018"
         ));
-        adapter = new RecyclerViewAdapterClass(ads, this.getContext());
-        recyclerView.setAdapter(adapter);
+//        adapter = new RecyclerViewAdapterClass(ads, this.getContext());
+//        recyclerView.setAdapter(adapter);
 
-//        loadRecyclerViewData();
+        loadRecyclerViewData();
         return rootView;
     }
 
@@ -79,8 +80,9 @@ public class AdvFragment extends Fragment {
                     public void onResponse(String response) {
                         progressDialog.dismiss();
                         try {
-                            JSONObject obj = new JSONObject(response);
-                            Log.d("Response", ""+response);
+//                            JSONObject obj = new JSONObject(response);
+                            JSONArray obj = new JSONArray(response);
+                            Log.d("Fetch Ads Response", ""+response);
 
 
                             /*
@@ -88,9 +90,11 @@ public class AdvFragment extends Fragment {
                              */
 
                             for(int i = 0; i < obj.length(); i++){
-                                JSONObject o = obj.getJSONObject(String.valueOf(i));
+//                                JSONObject o = obj.getJSONObject(i);
+                                JSONObject o = obj.getJSONObject(i);
                                 boolean alreadyShownAd = false;
                                 for(AdvertisementClass shownAd : ads) {
+//                                    if (shownAd.getID() == o.getInt("ID")) {
                                     if (shownAd.getID() == o.getInt("ID")) {
                                         alreadyShownAd = true;
                                         break;
@@ -100,8 +104,9 @@ public class AdvFragment extends Fragment {
                                     AdvertisementClass ad = new AdvertisementClass(
                                             o.getInt("ID"),
                                             o.getString("title"),
-                                            o.getString("desc"),
+                                            o.getString("description"),
                                             o.getString("imgURL"),
+//                                            "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
                                             o.getString("expirationDate")
                                     );
                                     ads.add(ad);
@@ -130,7 +135,7 @@ public class AdvFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("OwnerID", String.valueOf(__Info.ID));
+                params.put("ownerID", String.valueOf(__Info.ID));
                 return params;
             }
 

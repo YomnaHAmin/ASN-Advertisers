@@ -193,7 +193,7 @@ public class SignupActivity extends AppCompatActivity {
                     getLocation();
                 }
                 else{
-                    Toast.makeText(this, "Location Permissions not granted",Toast.LENGTH_LONG);
+                    Toast.makeText(this, "Location Permissions not granted",Toast.LENGTH_LONG).show();
                 }
                 return;
             case RESULT_PROCESS_IMG:
@@ -201,7 +201,7 @@ public class SignupActivity extends AppCompatActivity {
                     openGallery();
                 }
                 else{
-                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG);
+                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG).show();
                 }
                 return;
         }
@@ -209,6 +209,7 @@ public class SignupActivity extends AppCompatActivity {
     @SuppressLint("MissingPermission")
     private void getLocation(){
         locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+
         progressDialog.setMessage("Collecting Data ... ");
         progressDialog.show();
     }
@@ -266,8 +267,8 @@ public class SignupActivity extends AppCompatActivity {
                                     obj.getString("email"),
                                     obj.getString("licence"),
                                     obj.getString("creditCard"),
-//                                    obj.getString("iconURL"),
-                                        "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
+                                    obj.getString("iconURL"),
+//                                        "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
                                     obj.getDouble("lng"),
                                     obj.getDouble("lat"),
                                     obj.getDouble("atit")

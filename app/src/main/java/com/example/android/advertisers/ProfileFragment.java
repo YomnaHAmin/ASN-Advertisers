@@ -1,6 +1,7 @@
 package com.example.android.advertisers;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,11 +14,11 @@ import com.squareup.picasso.Picasso;
 
 
 public class ProfileFragment extends Fragment{
-    TextView name, slogan, serviceType, availibility, adrs, phone, email, licence, lat, lng, atit;
+    TextView name, slogan, serviceType, availibility, adrs, phone, email, licence, crdtCrd, lat, lng, atit;
     ImageView icon;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -30,6 +31,7 @@ public class ProfileFragment extends Fragment{
         phone = (TextView) rootView.findViewById(R.id.phoneValue);
         email = (TextView) rootView.findViewById(R.id.emailValue);
         licence = (TextView) rootView.findViewById(R.id.licenceValue);
+        crdtCrd = (TextView) rootView.findViewById(R.id.creditCardValue);
         lat = (TextView) rootView.findViewById(R.id.locationLat);
         lng = (TextView) rootView.findViewById(R.id.locationLng);
         atit = (TextView) rootView.findViewById(R.id.locationAtit);
@@ -43,6 +45,7 @@ public class ProfileFragment extends Fragment{
         phone.setText(__Info.phone);
         email.setText(__Info.email);
         licence.setText(__Info.licence);
+        crdtCrd.setText(__Info.creditCard);
         lat.setText(String.valueOf(__Info.lat));
         lng.setText(String.valueOf(__Info.lng));
         atit.setText(String.valueOf(__Info.atit));

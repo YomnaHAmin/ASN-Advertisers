@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -118,6 +119,7 @@ public class EditDataActivity extends AppCompatActivity {
             newIconBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             newIcon = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
 
+            Log.d("Encoded Img : ", newIcon);
             newIconValue.setText(newIconUri.toString());
             rmvNewImg.setVisibility(View.VISIBLE);
         }
