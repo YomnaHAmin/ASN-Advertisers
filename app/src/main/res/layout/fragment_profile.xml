@@ -139,7 +139,7 @@
                 android:id="@+id/availibilityTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Availibility"
+                android:text="Availability"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textAllCaps="true"

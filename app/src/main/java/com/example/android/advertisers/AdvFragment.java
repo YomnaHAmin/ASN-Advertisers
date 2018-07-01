@@ -46,13 +46,13 @@ public class AdvFragment extends Fragment {
 
         // Define the array of advertisments and fill it
         ads = new ArrayList<>();
-        ads.add(new AdvertisementClass(
-                1,
-                "Test title",
-                "Test desc",
-                "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
-                "5/7/2018"
-        ));
+//        ads.add(new AdvertisementClass(
+//                1,
+//                "Test title",
+//                "Test desc",
+//                "https://asnasucse18.000webhostapp.com/res/AdvertisersApp/AdsImgs/Test.jpg",
+//                "5/7/2018"
+//        ));
 //        adapter = new RecyclerViewAdapterClass(ads, this.getContext());
 //        recyclerView.setAdapter(adapter);
 
@@ -110,7 +110,7 @@ public class AdvFragment extends Fragment {
                                             o.getString("expirationDate")
                                     );
                                     ads.add(ad);
-                                    break;
+//                                    break;
                                 }
                             }
 

@@ -60,7 +60,7 @@ public class RecyclerViewAdapterClass extends RecyclerView.Adapter<RecyclerViewA
         holder.adDesc.setText(ad.getDescription());
 //        Log.d("Show Ad Img",ad.getImgURL());
         Picasso.with(context).load(ad.getImgURL()).into(holder.adImg);
-        if(ad.getExpirationDate() != null){
+        if(!ad.getExpirationDate().equals("0000-00-00")){
             holder.expDateValue.setText(ad.getExpirationDate());
             holder.expDate.setVisibility(View.VISIBLE);
         }

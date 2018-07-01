@@ -63,6 +63,10 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        newSlogan = " ";
+        newAvailibility = " ";
+        newPhone = " ";
+
         name = (EditText) findViewById(R.id.nameEdit);
         slogan = (EditText) findViewById(R.id.sloganEdit);
         serviceType = (EditText) findViewById(R.id.serviceTypeEdit);

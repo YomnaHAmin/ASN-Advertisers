@@ -58,6 +58,8 @@ public class AddAdvActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_adv);
 
+        expirationDate = " ";
+
         titleEdit = (EditText) findViewById(R.id.titleEdit);
         descEdit = (EditText) findViewById(R.id.descEdit);
         expirationDateValue = (TextView) findViewById(R.id.expDateBtn);
@@ -68,7 +70,18 @@ public class AddAdvActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month += 1;
-                expirationDate = String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year);
+                String strYear = String.valueOf(year);
+                String strMonth = String.valueOf(month);
+                String strDay = String.valueOf(day);
+
+                if(month < 10){
+                    strMonth = "0"+strMonth;
+                }
+                if(day < 10){
+                    strDay = "0"+strDay;
+                }
+//                expirationDate = String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year);
+                expirationDate = strYear+"-"+strMonth+"-"+strDay;
                 expirationDateValue.setText(expirationDate);
                 rmvExpirationDate.setVisibility(View.VISIBLE);
             }
@@ -138,7 +151,7 @@ public class AddAdvActivity extends AppCompatActivity {
                     openGallery();
                 }
                 else{
-                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG);
+                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG).show();
                 }
                 return;
         }
@@ -160,7 +173,7 @@ public class AddAdvActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
     public void expDateRmvBtnOnClick(View view){
-        expirationDate = null;
+        expirationDate = " ";
         expirationDateValue.setText("Pick Expiration Date");
         view.setVisibility(View.GONE);
     }
@@ -170,7 +183,7 @@ public class AddAdvActivity extends AppCompatActivity {
         desc = descEdit.getText().toString().trim();
 
         if(title == null || desc == null || img == null) {
-            Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Please Fill Required Fields", Toast.LENGTH_LONG).show();
         }
         else{
             final ProgressDialog progressDialog = new ProgressDialog(this);

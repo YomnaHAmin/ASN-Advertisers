@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -67,6 +68,9 @@ public class EditAdvActivity extends AppCompatActivity {
         Intent i = getIntent();
         adPosition = i.getIntExtra("adPosition", -1);
 
+        expirationDate = " ";
+        img = " ";
+
         titleEdit = (EditText) findViewById(R.id.titleEdit);
         descEdit = (EditText) findViewById(R.id.descEdit);
         expirationDateValue = (TextView) findViewById(R.id.expDateBtn);
@@ -85,7 +89,18 @@ public class EditAdvActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month += 1;
-                expirationDate = String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year);
+                String strYear = String.valueOf(year);
+                String strMonth = String.valueOf(month);
+                String strDay = String.valueOf(day);
+
+                if(month < 10){
+                    strMonth = "0"+strMonth;
+                }
+                if(day < 10){
+                    strDay = "0"+strDay;
+                }
+//                expirationDate = String.valueOf(day)+"/"+String.valueOf(month)+"/"+String.valueOf(year);
+                expirationDate = strYear+"-"+strMonth+"-"+strDay;
                 expirationDateValue.setText(expirationDate);
                 rmvExpirationDate.setVisibility(View.VISIBLE);
             }
@@ -155,7 +170,7 @@ public class EditAdvActivity extends AppCompatActivity {
                     openGallery();
                 }
                 else{
-                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG);
+                    Toast.makeText(this, "Gallery Permission not granted",Toast.LENGTH_LONG).show();
                 }
                 return;
         }
@@ -178,7 +193,7 @@ public class EditAdvActivity extends AppCompatActivity {
     }
 
     public void expDateRmvBtnOnClick(View view){
-        expirationDate = null;
+        expirationDate = " ";
         expirationDateValue.setText("Pick Expiration Date");
         view.setVisibility(View.GONE);
     }
@@ -200,6 +215,7 @@ public class EditAdvActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
+                        Log.d("Edit Adv Response :", response);
                         try {
                             if(!deleteAd) {
                                 JSONObject obj = new JSONObject(response);
@@ -207,7 +223,7 @@ public class EditAdvActivity extends AppCompatActivity {
                                 AdvFragment.ads.get(adPosition).setTitle(title);
                                 AdvFragment.ads.get(adPosition).setDescription(desc);
                                 AdvFragment.ads.get(adPosition).setExpirationDate(expirationDate);
-                                if (img != null) {
+                                if (!img.equals(" ")) {
                                     AdvFragment.ads.get(adPosition).setImgURL(obj.getString("imgURL"));
                                 }
                             }
@@ -215,6 +231,7 @@ public class EditAdvActivity extends AppCompatActivity {
                                 AdvFragment.ads.remove(adPosition);
                             }
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -235,10 +252,12 @@ public class EditAdvActivity extends AppCompatActivity {
                 params.put("advID", String.valueOf(ID));
                 params.put("ownerID", String.valueOf(ownerID));
                 if(deleteAd){
-                    params.put("delete", "true");
+//                    params.put("delete", "true");
+                    params.put("delete", "1");
                 }
                 else {
-                    params.put("delete", "false");
+//                    params.put("delete", "false");
+                    params.put("delete", "0");
                     params.put("title", title);
                     params.put("desc", desc);
                     params.put("expirationDate", expirationDate);
@@ -284,7 +303,7 @@ public class EditAdvActivity extends AppCompatActivity {
                 editAdRequest(true);
             }
         });
-        dlgAlert.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
+        dlgAlert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 //dismiss the dialog
             }

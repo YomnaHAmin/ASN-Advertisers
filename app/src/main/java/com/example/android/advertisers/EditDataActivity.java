@@ -52,6 +52,11 @@ public class EditDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_data);
 
+        newSlogan = " ";
+        newAvailibility = " ";
+        newPhone = " ";
+        newIcon = " ";
+
         name = (EditText) findViewById(R.id.nameEdit);
         slogan = (EditText) findViewById(R.id.sloganEdit);
         serviceType = (EditText) findViewById(R.id.serviceTypeEdit);
